@@ -1,0 +1,353 @@
+[
+	{
+		"name": "Human",
+		"str": 0,
+		"dex": 0,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Dwarf",
+		"str": 0,
+		"dex": 0,
+		"con": 2,
+		"int": 0,
+		"wis": 0,
+		"cha": -2
+	},
+	{
+		"name": "Elf",
+		"str": 0,
+		"dex": 2,
+		"con": -2,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Gnome",
+		"str": -2,
+		"dex": 0,
+		"con": 2,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Half-Elf",
+		"str": 0,
+		"dex": 0,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Half-Orc",
+		"str": 2,
+		"dex": 0,
+		"con": -2,
+		"int": -2,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Halfling",
+		"str": -2,
+		"dex": 2,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Orc",
+		"str": 4,
+		"dex": 0,
+		"con": 0,
+		"int": -2,
+		"wis": -2,
+		"cha": -2
+	},
+	{
+		"name": "Lesser Aasimar",
+		"str": 0,
+		"dex": 0,
+		"con": 0,
+		"int": 0,
+		"wis": 2,
+		"cha": 2
+	},
+	{
+		"name": "Asherati",
+		"str": 0,
+		"dex": 0,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Aventi",
+		"str": 0,
+		"dex": 0,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Azurin",
+		"str": 0,
+		"dex": 0,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Bhuka",
+		"str": -2,
+		"dex": 2,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Buomman",
+		"str": 0,
+		"dex": 0,
+		"con": 0,
+		"int": 0,
+		"wis": 2,
+		"cha": -2
+	},
+	{
+		"name": "Changeling",
+		"str": 0,
+		"dex": 0,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Daelkyr Half-Blood",
+		"str": 0,
+		"dex": 0,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Darfellan",
+		"str": 2,
+		"dex": -2,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Lesser Drow",
+		"str": 0,
+		"dex": 2,
+		"con": -2,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Duskling",
+		"str": 0,
+		"dex": 0,
+		"con": 2,
+		"int": -2,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Elan",
+		"str": 0,
+		"dex": 0,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": -2
+	},
+	{
+		"name": "Hellbred, Body",
+		"str": 0,
+		"dex": 0,
+		"con": 2,
+		"int": -2,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Hellbred, Spirit",
+		"str": 0,
+		"dex": 0,
+		"con": -2,
+		"int": 0,
+		"wis": 0,
+		"cha": 2
+	},
+	{
+		"name": "Illumian",
+		"str": 0,
+		"dex": 0,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Kalashtar",
+		"str": 0,
+		"dex": 0,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Killoren",
+		"str": 0,
+		"dex": 0,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Kobold",
+		"str": -4,
+		"dex": 2,
+		"con": -2,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Maenad",
+		"str": 0,
+		"dex": 0,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Mongrelfolk",
+		"str": 0,
+		"dex": 0,
+		"con": 4,
+		"int": -2,
+		"wis": 0,
+		"cha": -4
+	},
+	{
+		"name": "Neanderthal",
+		"str": 2,
+		"dex": -2,
+		"con": 2,
+		"int": -2,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Raptoran",
+		"str": 0,
+		"dex": 0,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Rilkan",
+		"str": 2,
+		"dex": -2,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Sea Kin",
+		"str": 0,
+		"dex": 0,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Shifter",
+		"str": 0,
+		"dex": 2,
+		"con": 0,
+		"int": -2,
+		"wis": 0,
+		"cha": -2
+	},
+	{
+		"name": "Skarns",
+		"str": 2,
+		"dex": -2,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Spellscale",
+		"str": 0,
+		"dex": 0,
+		"con": -2,
+		"int": 0,
+		"wis": 0,
+		"cha": 2
+	},
+	{
+		"name": "Synad",
+		"str": 0,
+		"dex": 0,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Underfolk",
+		"str": 0,
+		"dex": 0,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	},
+	{
+		"name": "Warforged",
+		"str": 0,
+		"dex": 0,
+		"con": 2,
+		"int": 0,
+		"wis": -2,
+		"cha": -2
+	},
+	{
+		"name": "Xeph",
+		"str": -2,
+		"dex": 2,
+		"con": 0,
+		"int": 0,
+		"wis": 0,
+		"cha": 0
+	}
+]
