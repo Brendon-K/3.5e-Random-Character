@@ -60,11 +60,14 @@ $(document).ready(function() {
 		baseClasses = data;
 	});
 
-	//Reset the skills to 0
+	//Reset the page
 	function reset() {
+		//reset skills to 0
 		for (i = 0; i < NUM_SKILLS; i++) {
 			skills[i][1] = 0;
 		}
+		//reset the class text
+		$("#class").text("");
 	}
 
 	//Roll a "numSides"-sided die "numRolls" amount of times
@@ -145,51 +148,9 @@ $(document).ready(function() {
 		}
 	}
 
-	$(".randomButton").on("click", function() {
-		var level = $("#level").val();
-		console.log("level: " + level);
-		reset();
-		var temp;
-		var race = rollRace();
-		var baseClass = rollClass();
-
-		//For each stat, roll and add race stat modifier. If the modifier makes the stat less than 1, make it 1.
-		temp = rollStats() + race.str;
-		var strength = (temp > 0) ? temp : 1;
-		temp = rollStats() + race.dex;
-		var dexterity = (temp > 0) ? temp : 1;
-		temp = rollStats() + race.con;
-		var constitution = (temp > 0) ? temp : 1;
-		temp = rollStats() + race.int;
-		var intelligence = (temp > 0) ? temp : 1;
-		temp = rollStats() + race.wis;
-		var wisdom = (temp > 0) ? temp : 1;
-		temp = rollStats() + race.cha;
-		var charisma = (temp > 0) ? temp : 1;
-
-		//Calculate the intelligence modifier for later use
-		var intMod = Math.floor((intelligence - 10) / 2);
-		console.log("intMod: " + intMod);
-		console.log("skillPoints: " + baseClass.skillPoints);
-		//Calc skill points @ level 1
-		var totalSkillPoints = 4 * (baseClass.skillPoints + intMod);
-		//Skill points can be a minimum of 1
-		if (totalSkillPoints < 1) {
-			totalSkillPoints = 1;
-		}
-		console.log("totalSkillPoints: " + totalSkillPoints);
-
-		//Manipulate the HTML
-		$("#race").text(race.name);
-		$("#class").text(baseClass.name);
-		$("#str").text(strength);
-		$("#dex").text(dexterity);
-		$("#con").text(constitution);
-		$("#int").text(intelligence);
-		$("#wis").text(wisdom);
-		$("#cha").text(charisma);
-		racialStats(race, strength, dexterity, constitution, intelligence, wisdom, charisma);
-
+	//Allocate skill points
+	function allocateSkills(baseClass, totalSkillPoints) {
+		//Allocate skills until you run out of skill points
 		do {
 			var randNum = Math.floor(Math.random() * NUM_SKILLS);
 			var currentSkill = skills[randNum][0];
@@ -209,6 +170,95 @@ $(document).ready(function() {
 				totalSkillPoints--;
 			}
 		} while (totalSkillPoints > 0);
+	}
+
+	//Do this code when the button is pressed
+	$(".randomButton").on("click", function() {
+		var level = $("#level").val();
+		reset();
+		var temp;
+		var race = rollRace();
+		var humanMod = 0;
+		if (race.name == "Human") {
+			humanMod = 1;
+		}
+		var baseClass = rollClass();
+		$("#class").append('<b>' + baseClass.name + '</b>');
+
+		//For each stat, roll and add race stat modifier. If the modifier makes the stat less than 1, make it 1.
+		temp = rollStats() + race.str;
+		var strength = (temp > 0) ? temp : 1;
+		temp = rollStats() + race.dex;
+		var dexterity = (temp > 0) ? temp : 1;
+		temp = rollStats() + race.con;
+		var constitution = (temp > 0) ? temp : 1;
+		temp = rollStats() + race.int;
+		var intelligence = (temp > 0) ? temp : 1;
+		temp = rollStats() + race.wis;
+		var wisdom = (temp > 0) ? temp : 1;
+		temp = rollStats() + race.cha;
+		var charisma = (temp > 0) ? temp : 1;
+
+		//Calculate the intelligence modifier for later use
+		var intMod = Math.floor((intelligence - 10) / 2);
+		//Calc skill points @ level 1
+		var totalSkillPoints = 4 * (baseClass.skillPoints + intMod + humanMod);
+		//Skill points can be a minimum of 1
+		if (totalSkillPoints < 1) {
+			totalSkillPoints = 1;
+		}
+		console.log("SP: " + totalSkillPoints);
+		//Allocate the skill points at level 1
+		allocateSkills(baseClass, totalSkillPoints);
+
+		//For loop if the user selects a level larger than 1
+		for (l = 1; l < level; l++) {
+			//Roll a new class for each level
+			baseClass = rollClass();
+			//Add the class to the list of classes for the player to see what they rolled
+			$("#class").append('<br />' + '<b>' + baseClass.name + '</b>');
+			//Give and allocate additional skill points per level
+			totalSkillPoints += baseClass.skillPoints + intMod + humanMod;
+
+			console.log("SP: " + totalSkillPoints);
+			allocateSkills(baseClass, totalSkillPoints);
+			//Every 4 levels (starting at 4) raise a random stat by 1.
+			if (l % 4 == 0) {
+				var chooseStat = rollDice(6, 1);
+				switch (chooseStat) {
+					case 1:
+						strength++;
+						break;
+					case 2:
+						dexterity++;
+						break;
+					case 3:
+						constitution++;
+						break;
+					case 4:
+						intelligence++;
+						break;
+					case 5:
+						wisdom++;
+						break;
+					case 6:
+						charisma++;
+						break;
+				}
+			}
+		}
+
+		//Manipulate the HTML
+		$("#race").text(race.name);
+		$("#str").text(strength);
+		$("#dex").text(dexterity);
+		$("#con").text(constitution);
+		$("#int").text(intelligence);
+		$("#wis").text(wisdom);
+		$("#cha").text(charisma);
+		racialStats(race, strength, dexterity, constitution, intelligence, wisdom, charisma);
+
+
 
 		$("#appraise").text(skills[0][1]);
 		$("#balance").text(skills[1][1]);
