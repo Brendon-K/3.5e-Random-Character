@@ -184,7 +184,7 @@ $(document).ready(function() {
 	}
 
 	//Roll the hitpoints for the character
-	function rollHP(baseClass) { debugger;
+	function rollHP(baseClass) {
 		return rollDice(baseClass.hitDie, 1);
 	}
 

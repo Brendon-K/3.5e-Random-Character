@@ -485,7 +485,7 @@
 	},
 	{
 		"name": "Lurk",
-		"hitdie": 6,
+		"hitDie": 6,
 		"skillPoints": 4,
 		"skills": [
 			"bluff",
