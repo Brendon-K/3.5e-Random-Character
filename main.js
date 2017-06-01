@@ -98,7 +98,7 @@ $(document).ready(function() {
 
 	//Pick a random race
 	function rollRace() {
-		var numRaces = 39;
+		var numRaces = 31;
 		var randRace = races[Math.floor(Math.random() * numRaces)];
 
 		return randRace;
