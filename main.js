@@ -1,53 +1,53 @@
 $(document).ready(function() {
 	var strength, dexterity, constritution, intelligence, wisdom, charisma; 
-	const NUM_SKILLS = 45; 
 	var skills = [
-		["appraise", 0],
-		["balance", 0],
-		["bluff", 0],
-		["climb", 0],
-		["concentration", 0],
-		["craft", 0],
-		["decipherScript", 0],
-		["diplomacy", 0],
-		["disableDevice", 0],
-		["disguise", 0],
-		["escapeArtist", 0],
-		["forgery", 0],
-		["gatherInformation", 0],
-		["handleAnimal", 0],
-		["heal", 0],
-		["hide", 0],
-		["intimidate", 0],
-		["jump", 0],
-		["knowledgeArcana", 0],
-		["knowledgeArchitecture", 0],
-		["knowledgeDungeoneering", 0],
-		["knowledgeGeography", 0],
-		["knowledgeHistory", 0],
-		["knowledgeLocal", 0],
-		["knowledgeNature", 0],
-		["knowledgeNobility", 0],
-		["knowledgeReligion", 0],
-		["knowledgePlanes", 0],
-		["listen", 0],
-		["moveSilently", 0],
-		["openLock", 0],
-		["perform", 0],
-		["profession", 0],
-		["ride", 0],
-		["search", 0],
-		["senseMotive", 0],
-		["sleightOfHand", 0],
-		["speakLanguage", 0],
-		["spellcraft", 0],
-		["spot", 0],
-		["survival", 0],
-		["swim", 0],
-		["tumble", 0],
-		["useMagicDevice", 0],
-		["useRope", 0]
+		["appraise", 0, false],
+		["balance", 0, false],
+		["bluff", 0, false],
+		["climb", 0, false],
+		["concentration", 0, false],
+		["craft", 0, false],
+		["decipherScript", 0, false],
+		["diplomacy", 0, false],
+		["disableDevice", 0, false],
+		["disguise", 0, false],
+		["escapeArtist", 0, false],
+		["forgery", 0, false],
+		["gatherInformation", 0, false],
+		["handleAnimal", 0, false],
+		["heal", 0, false],
+		["hide", 0, false],
+		["intimidate", 0, false],
+		["jump", 0, false],
+		["knowledgeArcana", 0, false],
+		["knowledgeArchitecture", 0, false],
+		["knowledgeDungeoneering", 0, false],
+		["knowledgeGeography", 0, false],
+		["knowledgeHistory", 0, false],
+		["knowledgeLocal", 0, false],
+		["knowledgeNature", 0, false],
+		["knowledgeNobility", 0, false],
+		["knowledgeReligion", 0, false],
+		["knowledgePlanes", 0, false],
+		["listen", 0, false],
+		["moveSilently", 0, false],
+		["openLock", 0, false],
+		["perform", 0, false],
+		["profession", 0, false],
+		["ride", 0, false],
+		["search", 0, false],
+		["senseMotive", 0, false],
+		["sleightOfHand", 0, false],
+		["speakLanguage", 0, false],
+		["spellcraft", 0, false],
+		["spot", 0, false],
+		["survival", 0, false],
+		["swim", 0, false],
+		["tumble", 0, false],
+		["useMagicDevice", 0, false],
+		["useRope", 0, false]
 	]
+	const NUM_SKILLS = skills.length; 
 
 	var races;
 	var baseClasses;
@@ -65,6 +65,10 @@ $(document).ready(function() {
 		//reset skills to 0
 		for (i = 0; i < NUM_SKILLS; i++) {
 			skills[i][1] = 0;
+		}
+		//reset skill proficiency to false
+		for (i = 0; i < NUM_SKILLS; i++) {
+			skills[i][2] = false;
 		}
 		//reset the class text
 		$("#class").text("");
@@ -101,7 +105,7 @@ $(document).ready(function() {
 
 	//Pick a random race
 	function rollRace() {
-		var numRaces = 31;
+		var numRaces = races.length;
 		var randRace = races[Math.floor(Math.random() * numRaces)];
 
 		return randRace;
@@ -109,7 +113,7 @@ $(document).ready(function() {
 
 	//Pick a random class
 	function rollClass() {
-		var numClasses = 50;
+		var numClasses = baseClasses.length;
 		var randClass = baseClasses[Math.floor(Math.random() * numClasses)];
 		return randClass;
 	}
@@ -158,6 +162,13 @@ $(document).ready(function() {
 			for (i = 0; i < baseClass.skills.length; i++) {
 				if (baseClass.skills[i] == currentSkill) {
 					isClassSkill = true;
+					//Loop through list of skills and set the given skill to 'true' 
+					//this marks that the character is now good enough with that skill to raise its max allowed points
+					for (i = 0; i < skills.length; i++) {
+						if (skills[i][0] == currentSkill) {
+							skills[i][2] = true;
+						}
+					}
 				}
 			}
 			if (!isClassSkill) {
@@ -172,6 +183,11 @@ $(document).ready(function() {
 		} while (totalSkillPoints > 0);
 	}
 
+	//Roll the hitpoints for the character
+	function rollHP(baseClass) { debugger;
+		return rollDice(baseClass.hitDie, 1);
+	}
+
 	//Do this code when the button is pressed
 	$(".randomButton").on("click", function() {
 		var level = $("#level").val();
@@ -184,6 +200,9 @@ $(document).ready(function() {
 		}
 		var baseClass = rollClass();
 		$("#class").append('<b>' + baseClass.name + '</b>');
+
+		//Give max possible HP at level 1
+		var hitPoints = baseClass.hitDie;
 
 		//For each stat, roll and add race stat modifier. If the modifier makes the stat less than 1, make it 1.
 		temp = rollStats() + race.str;
@@ -207,7 +226,6 @@ $(document).ready(function() {
 		if (totalSkillPoints < 1) {
 			totalSkillPoints = 1;
 		}
-		console.log("SP: " + totalSkillPoints);
 		//Allocate the skill points at level 1
 		allocateSkills(baseClass, totalSkillPoints);
 
@@ -217,10 +235,10 @@ $(document).ready(function() {
 			baseClass = rollClass();
 			//Add the class to the list of classes for the player to see what they rolled
 			$("#class").append('<br />' + '<b>' + baseClass.name + '</b>');
+			//Roll HP per level
+			hitPoints += rollHP(baseClass);
 			//Give and allocate additional skill points per level
 			totalSkillPoints = baseClass.skillPoints + intMod + humanMod;
-
-			console.log("SP: " + totalSkillPoints);
 			allocateSkills(baseClass, totalSkillPoints);
 			//Every 4 levels (starting at 4) raise a random stat by 1.
 			if (l % 4 == 0) {
@@ -258,7 +276,7 @@ $(document).ready(function() {
 		$("#cha").text(charisma);
 		racialStats(race, strength, dexterity, constitution, intelligence, wisdom, charisma);
 
-
+		$("#hp").text(hitPoints);
 
 		$("#appraise").text(skills[0][1]);
 		$("#balance").text(skills[1][1]);
