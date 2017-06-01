@@ -145,6 +145,8 @@ $(document).ready(function() {
 	}
 
 	$(".randomButton").on("click", function() {
+		var level = $("#level").val();
+		console.log("level: " + level);
 		reset();
 		var temp;
 		var race = rollRace();
@@ -167,10 +169,14 @@ $(document).ready(function() {
 		temp = rollStats() + race.cha;
 		var charisma = (temp > 0) ? temp : 1;
 
-		var totalSkillPoints = 4 * (baseClass.skillPoints + (Math.floor((intelligence - 10) / 2)));
+		var intMod = Math.floor((intelligence - 10) / 2);
+		console.log("intMod: " + intMod);
+		console.log("skillPoints: " + baseClass.skillPoints);
+		var totalSkillPoints = (4 * (baseClass.skillPoints + intMod)) + ((level - 1) * (baseClass.skillPoints + intMod));
 		if (totalSkillPoints < 1) {
 			totalSkillPoints = 1;
 		}
+		console.log("totalSkillPoints: " + totalSkillPoints);
 
 		$("#race").text(race.name);
 		$("#class").text(baseClass.name);
@@ -182,7 +188,6 @@ $(document).ready(function() {
 		$("#cha").text(charisma);
 		racialStats(race, strength, dexterity, constitution, intelligence, wisdom, charisma);
 
-		console.log(baseClass.skills.length);
 		do {
 			var randNum = Math.floor(Math.random() * NUM_SKILLS);
 			var currentSkill = skills[randNum][0];
