@@ -1,6 +1,33 @@
 $(document).ready(function() {
 	var strength, dexterity, constritution, intelligence, wisdom, charisma; 
 
+	var races;
+	var baseClasses;
+
+	$.getJSON('https://raw.githubusercontent.com/Brendon-K/3.5e-Random-Character/master/races.json', function(data) {
+		races = data;
+	});
+
+	$.getJSON('https://raw.githubusercontent.com/Brendon-K/3.5e-Random-Character/master/baseClasses.json', function(data) {
+		baseClasses = data;
+	});
+
+
+
+	/*$.ajax({
+		url: "https://raw.githubusercontent.com/Brendon-K/3.5e-Random-Character/master/races.json",
+		dataType: "json",
+		type: "get",
+		cache: true,
+		success: function(data) {
+			var raceTest = data[0];
+			//$(data).each(function(index, value) {
+			//	console.log(value.name);
+			//})
+		}
+	})*/
+
+/*
 	function race(name, str, dex, con, int, wis, cha) {
 		this.name = name;
 		this.str = str;
@@ -154,7 +181,7 @@ $(document).ready(function() {
 	var wuJen = new baseClass("Wu Jen", false, false, false, false, true, true, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, true, true, true, true, true, true, true, false, false, false, false, true, false, false, false, false, false, true, false, false, false, false, false, false, 2);
 
 	var baseClasses = [archivist, ardent, artificer, barbarian, bard, beguiler, binder, cleric, crusader, divineMind, dragonShaman, dragonfireAdept, dreadNecromancer, druid, duskblade, factotum, favoredSoul, fighter, healer, hexblade, incarnate, knight, lurk, marshal, monk, ninja, paladin, psion, psychicWarrior, ranger, rogue, samurai, scout, shadowcaster, shugenja, sorcerer, soulborn, soulknife, spellthief, spiritShaman, swashbuckler, swordsage, totemist, truenamer, warblade, warlock, warmage, wilder, wizard, wuJen];
-
+*/
 	function rollDice(numSides, numRolls) {
 		var total = 0;
 		for (i = 0; i < numRolls; i++) {
@@ -196,7 +223,41 @@ $(document).ready(function() {
 		return randClass;
 	}
 
+	function racialStats(race, strength, dexterity, constitution, intelligence, wisdom, charisma) {
+		if (race.str < 0) {
+			$("#str").append(" (" + (strength - race.str) + " - " + race.str*-1 + ")");
+		} else if (race.str > 0) {
+			$("#str").append(" (" + (strength - race.str) + " + " + race.str + ")");
+		}
+		if (race.dex < 0) {
+			$("#dex").append(" (" + (dexterity - race.dex) + " - " + race.dex*-1 + ")");
+		} else if (race.dex > 0) {
+			$("#dex").append(" (" + (dexterity - race.dex) + " + " + race.dex + ")");
+		}
+		if (race.con < 0) {
+			$("#con").append(" (" + (constitution - race.con) + " - " + race.con*-1 + ")");
+		} else if (race.con > 0) {
+			$("#con").append(" (" + (constitution - race.con) + " + " + race.con + ")");
+		}
+		if (race.int < 0) {
+			$("#int").append(" (" + (intelligence - race.int) + " - " + race.int*-1 + ")");
+		} else if (race.int > 0) {
+			$("#int").append(" (" + (intelligence - race.int) + " + " + race.int + ")");
+		}
+		if (race.wis < 0) {
+			$("#wis").append(" (" + (wisdom - race.wis) + " - " + race.wis*-1 + ")");
+		} else if (race.wis > 0) {
+			$("#wis").append(" (" + (wisdom - race.wis) + " + " + race.wis + ")");
+		}
+		if (race.cha < 0) {
+			$("#cha").append(" (" + (charisma - race.cha) + " - " + race.cha*-1 + ")");
+		} else if (race.cha > 0) {
+			$("#cha").append(" (" + (charisma - race.cha) + " + " + race.cha + ")");
+		}
+	}
+
 	$(".randomButton").on("click", function() {
+		
 		var race = rollRace();
 		var baseClass = rollClass();
 		var strength = rollStats() + race.str;
@@ -210,6 +271,8 @@ $(document).ready(function() {
 			totalSkillPoints = 1;
 		}
 
+
+
 		$("#race").text(race.name);
 		$("#class").text(baseClass.name);
 		$("#str").text(strength);
@@ -219,6 +282,7 @@ $(document).ready(function() {
 		$("#wis").text(wisdom);
 		$("#cha").text(charisma);
 
+		racialStats(race, strength, dexterity, constitution, intelligence, wisdom, charisma);
 	});
 
 })
