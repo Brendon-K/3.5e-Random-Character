@@ -218,7 +218,7 @@ $(document).ready(function() {
 			//Add the class to the list of classes for the player to see what they rolled
 			$("#class").append('<br />' + '<b>' + baseClass.name + '</b>');
 			//Give and allocate additional skill points per level
-			totalSkillPoints += baseClass.skillPoints + intMod + humanMod;
+			totalSkillPoints = baseClass.skillPoints + intMod + humanMod;
 
 			console.log("SP: " + totalSkillPoints);
 			allocateSkills(baseClass, totalSkillPoints);
