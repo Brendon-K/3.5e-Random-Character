@@ -12,6 +12,7 @@ $(document).ready(function() {
 		baseClasses = data;
 	});
 
+	//Roll a "numSides"-sided die "numRolls" amount of times
 	function rollDice(numSides, numRolls) {
 		var total = 0;
 		for (i = 0; i < numRolls; i++) {
@@ -21,6 +22,7 @@ $(document).ready(function() {
 			return total;
 	}
 
+	//Roll 4 6-sided dice, re-rolling 1s once per die, and drop the lowest value
 	function rollStats() {
 		var lowest = 7;
 		var total = 0;
@@ -39,17 +41,18 @@ $(document).ready(function() {
 		return total;
 	}
 
+	//Pick a random race
 	function rollRace() {
-		var numRaces = 38;
+		var numRaces = 39;
 		var randRace = races[Math.floor(Math.random() * numRaces)];
 
 		return randRace;
 	}
 
+	//Pick a random class
 	function rollClass() {
 		var numClasses = 50;
 		var randClass = baseClasses[Math.floor(Math.random() * numClasses)];
-
 		return randClass;
 	}
 
@@ -123,7 +126,7 @@ $(document).ready(function() {
 		$("#cha").text(charisma);
 		racialStats(race, strength, dexterity, constitution, intelligence, wisdom, charisma);
 
-		console.log(baseClass.skills.length);
+		console.log(baseClass.skills);
 	});
 
 })
