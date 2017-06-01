@@ -21,7 +21,7 @@
 			"knowledgePlanes", 
 			"profession", 
 			"search", 
-			"spellcraft", 
+			"spellcraft"
 		]
 	},
 	{
@@ -42,7 +42,7 @@
 			"knowledgeNobility",
 			"knowledgeReligion",
 			"knowledgePlanes",
-			"profession",
+			"profession"
 		]
 	},
 	{
@@ -445,7 +445,7 @@
 			"knowledgeReligion",
 			"knowledgePlanes",
 			"profession",
-			"spellcraft",
+			"spellcraft"
 		]
 	},
 	{
