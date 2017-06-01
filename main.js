@@ -111,6 +111,7 @@ $(document).ready(function() {
 		return randClass;
 	}
 
+	//Show the calculation that makes up each total stat if relevant (base stat + racial stat mod)
 	function racialStats(race, strength, dexterity, constitution, intelligence, wisdom, charisma) {
 		if (race.str < 0) {
 			$("#str").append(" (" + (strength - race.str) + " - " + race.str*-1 + ")");
@@ -151,33 +152,34 @@ $(document).ready(function() {
 		var temp;
 		var race = rollRace();
 		var baseClass = rollClass();
+
+		//For each stat, roll and add race stat modifier. If the modifier makes the stat less than 1, make it 1.
 		temp = rollStats() + race.str;
 		var strength = (temp > 0) ? temp : 1;
-
 		temp = rollStats() + race.dex;
 		var dexterity = (temp > 0) ? temp : 1;
-
 		temp = rollStats() + race.con;
 		var constitution = (temp > 0) ? temp : 1;
-
 		temp = rollStats() + race.int;
 		var intelligence = (temp > 0) ? temp : 1;
-
 		temp = rollStats() + race.wis;
 		var wisdom = (temp > 0) ? temp : 1;
-
 		temp = rollStats() + race.cha;
 		var charisma = (temp > 0) ? temp : 1;
 
+		//Calculate the intelligence modifier for later use
 		var intMod = Math.floor((intelligence - 10) / 2);
 		console.log("intMod: " + intMod);
 		console.log("skillPoints: " + baseClass.skillPoints);
-		var totalSkillPoints = (4 * (baseClass.skillPoints + intMod)) + ((level - 1) * (baseClass.skillPoints + intMod));
+		//Calc skill points @ level 1
+		var totalSkillPoints = 4 * (baseClass.skillPoints + intMod);
+		//Skill points can be a minimum of 1
 		if (totalSkillPoints < 1) {
 			totalSkillPoints = 1;
 		}
 		console.log("totalSkillPoints: " + totalSkillPoints);
 
+		//Manipulate the HTML
 		$("#race").text(race.name);
 		$("#class").text(baseClass.name);
 		$("#str").text(strength);
