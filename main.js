@@ -192,8 +192,9 @@ $(document).ready(function() {
 	}
 
 	//Roll the hitpoints for the character
-	function rollHP(baseClass) {
-		return rollDice(baseClass.hitDie, 1);
+	function rollHP(baseClass, conMod) {
+		var result = rollDice(baseClass.hitDie, 1) + conMod;
+		return result;
 	}
 
 	//Do this code when the button is pressed
@@ -209,9 +210,6 @@ $(document).ready(function() {
 		var baseClass = rollClass();
 		$("#class").append(baseClass.name);
 
-		//Give max possible HP at level 1
-		var hitPoints = baseClass.hitDie;
-
 		//For each stat, roll and add race stat modifier. If the modifier makes the stat less than 1, make it 1.
 		temp = rollStats() + race.str;
 		var strength = (temp > 0) ? temp : 1;
@@ -225,6 +223,10 @@ $(document).ready(function() {
 		var wisdom = (temp > 0) ? temp : 1;
 		temp = rollStats() + race.cha;
 		var charisma = (temp > 0) ? temp : 1;
+
+		//Give max possible HP at level 1
+		var conMod = Math.floor((constitution - 10) / 2);
+		var hitPoints = baseClass.hitDie + conMod;
 
 		//Calculate the intelligence modifier for later use
 		var intMod = Math.floor((intelligence - 10) / 2);
@@ -244,7 +246,7 @@ $(document).ready(function() {
 			//Add the class to the list of classes for the player to see what they rolled
 			$("#class").append('<br />' + baseClass.name);
 			//Roll HP per level
-			hitPoints += rollHP(baseClass);
+			hitPoints += rollHP(baseClass, conMod);
 			//Give and allocate additional skill points per level
 			totalSkillPoints = baseClass.skillPoints + intMod + humanMod;
 			allocateSkills(baseClass, totalSkillPoints);
