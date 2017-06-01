@@ -199,6 +199,16 @@ $(document).ready(function() {
 
 	//Do this code when the button is pressed
 	$(".randomButton").on("click", function() {
+		var percentChance = $("#percentChance").val();
+		//If the input is between 0 and 100, set the actual value to a decimal form
+		//If not, then show error in textbox and default to 0
+		if (percentChance >= 0 && percentChance <= 100) {
+			percentChance = percentChance / 100;
+		} else {
+			percentChance = 0;
+			$("#percentChance").val("Must be between 0 and 100");
+		}
+
 		var level = $("#level").val();
 		reset();
 		var temp;
@@ -241,8 +251,12 @@ $(document).ready(function() {
 
 		//For loop if the user selects a level larger than 1
 		for (l = 1; l < level; l++) {
-			//Roll a new class for each level
-			baseClass = rollClass();
+			//Decide if a new class is rolled
+			var n = Math.random();
+			if (n < percentChance) {
+				//Roll a new class
+				baseClass = rollClass();
+			}
 			//Add the class to the list of classes for the player to see what they rolled
 			$("#class").append('<br />' + baseClass.name);
 			//Roll HP per level
