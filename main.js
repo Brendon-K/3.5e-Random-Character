@@ -123,7 +123,7 @@ $(document).ready(function() {
 		$("#cha").text(charisma);
 		racialStats(race, strength, dexterity, constitution, intelligence, wisdom, charisma);
 
-
+		console.log(baseClass.skills.length);
 	});
 
 })
