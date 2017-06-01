@@ -46,11 +46,11 @@ $(document).ready(function() {
 		["tumble", 0, false],
 		["useMagicDevice", 0, false],
 		["useRope", 0, false]
-	]
-	const NUM_SKILLS = skills.length; 
+	];
 
 	var races;
 	var baseClasses;
+	var currentSkill;
 
 	$.getJSON('https://raw.githubusercontent.com/Brendon-K/3.5e-Random-Character/master/races.json', function(data) {
 		races = data;
@@ -63,11 +63,11 @@ $(document).ready(function() {
 	//Reset the page
 	function reset() {
 		//reset skills to 0
-		for (i = 0; i < NUM_SKILLS; i++) {
+		for (i = 0; i < skills.length; i++) {
 			skills[i][1] = 0;
 		}
 		//reset skill proficiency to false
-		for (i = 0; i < NUM_SKILLS; i++) {
+		for (i = 0; i < skills.length; i++) {
 			skills[i][2] = false;
 		}
 		//reset the class text
@@ -161,11 +161,36 @@ $(document).ready(function() {
 	}
 
 	//Allocate skill points
-	function allocateSkills(baseClass, totalSkillPoints) {
+	function allocateSkills(baseClass, totalSkillPoints, level) {
+		var percent = 0;
+		var maxLevel = parseInt(level) + 3;
+		var randNum = Math.floor(Math.random() * skills.length);
 		//Allocate skills until you run out of skill points
 		do {
-			var randNum = Math.floor(Math.random() * NUM_SKILLS);
-			var currentSkill = skills[randNum][0];
+			//Check to see if the skill changes based on user's input
+			var n = Math.random();
+			if (n < percent) {
+				currentSkill = skills[randNum][0];
+			}
+
+			//Check if the skill is still under the max
+			var isValidSkill = false;
+			if (skills[randNum][2]) {
+				if (skills[randNum][1] < maxLevel) {
+					isValidSkill = true;
+				}
+			} else {
+				if (skills[randNum][1] < (maxLevel / 2)) {
+					isValidSkill = true;
+				}
+			}
+
+			//If the skill is no longer under the max, then roll a new skill
+			if (!isValidSkill) {
+				randNum = Math.floor(Math.random() * skills.length);
+				currentSkill = skills[randNum][0];
+			}
+
 			var isClassSkill = false;
 			for (i = 0; i < baseClass.skills.length; i++) {
 				if (baseClass.skills[i] == currentSkill) {
@@ -179,16 +204,17 @@ $(document).ready(function() {
 					}
 				}
 			}
+			
 			if (!isClassSkill) {
-				if (totalSkillPoints >= 2) {
-					skills[randNum][1]++;
-					totalSkillPoints -= 2;
-				}
+				skills[randNum][1] += 0.5;
+				totalSkillPoints--;
 			} else {
 				skills[randNum][1]++;
 				totalSkillPoints--;
 			}
 		} while (totalSkillPoints > 0);
+
+		return currentSkill;
 	}
 
 	//Roll the hitpoints for the character
@@ -199,14 +225,22 @@ $(document).ready(function() {
 
 	//Do this code when the button is pressed
 	$(".randomButton").on("click", function() {
-		var percentChance = $("#percentChance").val();
+		var percentClass = $("#percentClass").val();
 		//If the input is between 0 and 100, set the actual value to a decimal form
 		//If not, then show error in textbox and default to 0
-		if (percentChance >= 0 && percentChance <= 100) {
-			percentChance = percentChance / 100;
+		if (percentClass >= 0 && percentClass <= 100) {
+			percentClass = percentClass / 100;
 		} else {
-			percentChance = 0;
-			$("#percentChance").val("Must be between 0 and 100");
+			percentClass = 0;
+			$("#percentClass").val("ERROR");
+		}
+
+		var percentSkill = $("#percentSkill").val();
+		if (percentSkill >= 0 && percentSkill <= 100) {
+			percentSkill = percentSkill / 100;
+		} else {
+			percentskill = 0;
+			$("#percentSkill").val("ERROR");
 		}
 
 		var level = $("#level").val();
@@ -247,13 +281,13 @@ $(document).ready(function() {
 			totalSkillPoints = 1;
 		}
 		//Allocate the skill points at level 1
-		allocateSkills(baseClass, totalSkillPoints);
+		allocateSkills(baseClass, totalSkillPoints, level);
 
 		//For loop if the user selects a level larger than 1
 		for (l = 1; l < level; l++) {
 			//Decide if a new class is rolled
 			var n = Math.random();
-			if (n < percentChance) {
+			if (n < percentClass) {
 				//Roll a new class
 				baseClass = rollClass();
 			}
@@ -263,7 +297,7 @@ $(document).ready(function() {
 			hitPoints += rollHP(baseClass, conMod);
 			//Give and allocate additional skill points per level
 			totalSkillPoints = baseClass.skillPoints + intMod + humanMod;
-			allocateSkills(baseClass, totalSkillPoints);
+			allocateSkills(baseClass, totalSkillPoints, level);
 			//Every 4 levels (starting at 4) raise a random stat by 1.
 			if (l % 4 == 0) {
 				var chooseStat = rollDice(6, 1);
