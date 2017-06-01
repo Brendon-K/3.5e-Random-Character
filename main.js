@@ -72,6 +72,14 @@ $(document).ready(function() {
 		}
 		//reset the class text
 		$("#class").text("");
+
+		//reset stat modifier text
+		$("#strDetailed").text("");
+		$("#dexDetailed").text("");
+		$("#conDetailed").text("");
+		$("#intDetailed").text("");
+		$("#wisDetailed").text("");
+		$("#chaDetailed").text("");
 	}
 
 	//Roll a "numSides"-sided die "numRolls" amount of times
@@ -121,34 +129,34 @@ $(document).ready(function() {
 	//Show the calculation that makes up each total stat if relevant (base stat + racial stat mod)
 	function racialStats(race, strength, dexterity, constitution, intelligence, wisdom, charisma) {
 		if (race.str < 0) {
-			$("#str").append(" (" + (strength - race.str) + " - " + race.str*-1 + ")");
+			$("#strDetailed").text(" (" + (strength - race.str) + " - " + race.str*-1 + ")");
 		} else if (race.str > 0) {
-			$("#str").append(" (" + (strength - race.str) + " + " + race.str + ")");
+			$("#strDetailed").text(" (" + (strength - race.str) + " + " + race.str + ")");
 		}
 		if (race.dex < 0) {
-			$("#dex").append(" (" + (dexterity - race.dex) + " - " + race.dex*-1 + ")");
+			$("#dexDetailed").text(" (" + (dexterity - race.dex) + " - " + race.dex*-1 + ")");
 		} else if (race.dex > 0) {
-			$("#dex").append(" (" + (dexterity - race.dex) + " + " + race.dex + ")");
+			$("#dexDetailed").text(" (" + (dexterity - race.dex) + " + " + race.dex + ")");
 		}
 		if (race.con < 0) {
-			$("#con").append(" (" + (constitution - race.con) + " - " + race.con*-1 + ")");
+			$("#conDetailed").text(" (" + (constitution - race.con) + " - " + race.con*-1 + ")");
 		} else if (race.con > 0) {
-			$("#con").append(" (" + (constitution - race.con) + " + " + race.con + ")");
+			$("#conDetailed").text(" (" + (constitution - race.con) + " + " + race.con + ")");
 		}
 		if (race.int < 0) {
-			$("#int").append(" (" + (intelligence - race.int) + " - " + race.int*-1 + ")");
+			$("#intDetailed").text(" (" + (intelligence - race.int) + " - " + race.int*-1 + ")");
 		} else if (race.int > 0) {
-			$("#int").append(" (" + (intelligence - race.int) + " + " + race.int + ")");
+			$("#intDetailed").text(" (" + (intelligence - race.int) + " + " + race.int + ")");
 		}
 		if (race.wis < 0) {
-			$("#wis").append(" (" + (wisdom - race.wis) + " - " + race.wis*-1 + ")");
+			$("#wisDetailed").text(" (" + (wisdom - race.wis) + " - " + race.wis*-1 + ")");
 		} else if (race.wis > 0) {
-			$("#wis").append(" (" + (wisdom - race.wis) + " + " + race.wis + ")");
+			$("#wisDetailed").text(" (" + (wisdom - race.wis) + " + " + race.wis + ")");
 		}
 		if (race.cha < 0) {
-			$("#cha").append(" (" + (charisma - race.cha) + " - " + race.cha*-1 + ")");
+			$("#chaDetailed").text(" (" + (charisma - race.cha) + " - " + race.cha*-1 + ")");
 		} else if (race.cha > 0) {
-			$("#cha").append(" (" + (charisma - race.cha) + " + " + race.cha + ")");
+			$("#chaDetailed").text(" (" + (charisma - race.cha) + " + " + race.cha + ")");
 		}
 	}
 
@@ -199,7 +207,7 @@ $(document).ready(function() {
 			humanMod = 1;
 		}
 		var baseClass = rollClass();
-		$("#class").append('<b>' + baseClass.name + '</b>');
+		$("#class").append(baseClass.name);
 
 		//Give max possible HP at level 1
 		var hitPoints = baseClass.hitDie;
@@ -234,7 +242,7 @@ $(document).ready(function() {
 			//Roll a new class for each level
 			baseClass = rollClass();
 			//Add the class to the list of classes for the player to see what they rolled
-			$("#class").append('<br />' + '<b>' + baseClass.name + '</b>');
+			$("#class").append('<br />' + baseClass.name);
 			//Roll HP per level
 			hitPoints += rollHP(baseClass);
 			//Give and allocate additional skill points per level
