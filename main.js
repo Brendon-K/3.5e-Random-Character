@@ -1,5 +1,53 @@
 $(document).ready(function() {
 	var strength, dexterity, constritution, intelligence, wisdom, charisma; 
+	const NUM_SKILLS = 45; 
+	var skills = [
+		["appraise", 0],
+		["balance", 0],
+		["bluff", 0],
+		["climb", 0],
+		["concentration", 0],
+		["craft", 0],
+		["decipherScript", 0],
+		["diplomacy", 0],
+		["disableDevice", 0],
+		["disguise", 0],
+		["escapeArtist", 0],
+		["forgery", 0],
+		["gatherInformation", 0],
+		["handleAnimal", 0],
+		["heal", 0],
+		["hide", 0],
+		["intimidate", 0],
+		["jump", 0],
+		["knowledgeArcana", 0],
+		["knowledgeArchitecture", 0],
+		["knowledgeDungeoneering", 0],
+		["knowledgeGeography", 0],
+		["knowledgeHistory", 0],
+		["knowledgeLocal", 0],
+		["knowledgeNature", 0],
+		["knowledgeNobility", 0],
+		["knowledgeReligion", 0],
+		["knowledgePlanes", 0],
+		["listen", 0],
+		["moveSilently", 0],
+		["openLock", 0],
+		["perform", 0],
+		["profession", 0],
+		["ride", 0],
+		["search", 0],
+		["senseMotive", 0],
+		["sleightOfHand", 0],
+		["speakLanguage", 0],
+		["spellcraft", 0],
+		["spot", 0],
+		["survival", 0],
+		["swim", 0],
+		["tumble", 0],
+		["useMagicDevice", 0],
+		["useRope", 0]
+	]
 
 	var races;
 	var baseClasses;
@@ -11,6 +59,13 @@ $(document).ready(function() {
 	$.getJSON('https://raw.githubusercontent.com/Brendon-K/3.5e-Random-Character/master/baseClasses.json', function(data) {
 		baseClasses = data;
 	});
+
+	//Reset the skills to 0
+	function reset() {
+		for (i = 0; i < NUM_SKILLS; i++) {
+			skills[i][1] = 0;
+		}
+	}
 
 	//Roll a "numSides"-sided die "numRolls" amount of times
 	function rollDice(numSides, numRolls) {
@@ -29,7 +84,7 @@ $(document).ready(function() {
 		var temp = 0;
 		for (var i = 0; i < 4; i++) {
 			temp = rollDice(6, 1);
-			if (temp = 1) {
+			if (temp == 1) {
 				temp = rollDice(6, 1);
 			}
 			if (temp < lowest) {
@@ -90,6 +145,7 @@ $(document).ready(function() {
 	}
 
 	$(".randomButton").on("click", function() {
+		reset();
 		var temp;
 		var race = rollRace();
 		var baseClass = rollClass();
@@ -111,7 +167,7 @@ $(document).ready(function() {
 		temp = rollStats() + race.cha;
 		var charisma = (temp > 0) ? temp : 1;
 
-		var totalSkillPoints = baseClass.skillPoints + (Math.floor((intelligence - 10) / 2));
+		var totalSkillPoints = 4 * (baseClass.skillPoints + (Math.floor((intelligence - 10) / 2)));
 		if (totalSkillPoints < 1) {
 			totalSkillPoints = 1;
 		}
@@ -126,7 +182,73 @@ $(document).ready(function() {
 		$("#cha").text(charisma);
 		racialStats(race, strength, dexterity, constitution, intelligence, wisdom, charisma);
 
-		console.log(baseClass.skills);
+		console.log(baseClass.skills.length);
+		do {
+			var randNum = Math.floor(Math.random() * NUM_SKILLS);
+			var currentSkill = skills[randNum][0];
+			var isClassSkill = false;
+			for (i = 0; i < baseClass.skills.length; i++) {
+				if (baseClass.skills[i] == currentSkill) {
+					isClassSkill = true;
+				}
+			}
+			if (!isClassSkill) {
+				if (totalSkillPoints >= 2) {
+					skills[randNum][1]++;
+					totalSkillPoints -= 2;
+				}
+			} else {
+				skills[randNum][1]++;
+				totalSkillPoints--;
+			}
+		} while (totalSkillPoints > 0);
+
+		$("#appraise").text(skills[0][1]);
+		$("#balance").text(skills[1][1]);
+		$("#bluff").text(skills[2][1]);
+		$("#climb").text(skills[3][1]);
+		$("#concentration").text(skills[4][1]);
+		$("#craft").text(skills[5][1]);
+		$("#decipherScript").text(skills[6][1]);
+		$("#diplomacy").text(skills[7][1]);
+		$("#disableDevice").text(skills[8][1]);
+		$("#disguise").text(skills[9][1]);
+		$("#escapeArtist").text(skills[10][1]);
+		$("#forgery").text(skills[11][1]);
+		$("#gatherInformation").text(skills[12][1]);
+		$("#handleAnimal").text(skills[13][1]);
+		$("#heal").text(skills[14][1]);
+		$("#hide").text(skills[15][1]);
+		$("#intimidate").text(skills[16][1]);
+		$("#jump").text(skills[17][1]);
+		$("#knowledgeArcana").text(skills[18][1]);
+		$("#knowledgeArchitecture").text(skills[19][1]);
+		$("#knowledgeDungeoneering").text(skills[20][1]);
+		$("#knowledgeGeography").text(skills[21][1]);
+		$("#knowledgeHistory").text(skills[22][1]);
+		$("#knowledgeLocal").text(skills[23][1]);
+		$("#knowledgeNature").text(skills[24][1]);
+		$("#knowledgeNobility").text(skills[25][1]);
+		$("#knowledgeReligion").text(skills[26][1]);
+		$("#knowledgePlanes").text(skills[27][1]);
+		$("#listen").text(skills[28][1]);
+		$("#moveSilently").text(skills[29][1]);
+		$("#openLock").text(skills[30][1]);
+		$("#perform").text(skills[31][1]);
+		$("#profession").text(skills[32][1]);
+		$("#ride").text(skills[33][1]);
+		$("#search").text(skills[34][1]);
+		$("#senseMotive").text(skills[35][1]);
+		$("#sleightOfHand").text(skills[36][1]);
+		$("#speakLanguage").text(skills[37][1]);
+		$("#spellcraft").text(skills[38][1]);
+		$("#spot").text(skills[39][1]);
+		$("#survival").text(skills[40][1]);
+		$("#swim").text(skills[41][1]);
+		$("#tumble").text(skills[42][1]);
+		$("#useMagicDevice").text(skills[43][1]);
+		$("#useRope").text(skills[44][1]);
+
 	});
 
 })
