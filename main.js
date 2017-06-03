@@ -163,7 +163,8 @@ $(document).ready(function() {
 	//Allocate skill points
 	function allocateSkills(baseClass, totalSkillPoints, level) {
 		var percent = 0;
-		var maxLevel = parseInt(level) + 3;
+		var maxLevel = 1*level + 3;
+		
 		var randNum = Math.floor(Math.random() * skills.length);
 		//Allocate skills until you run out of skill points
 		do {
