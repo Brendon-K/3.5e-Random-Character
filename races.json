@@ -48,10 +48,10 @@
 		"name": "Half-Orc",
 		"str": 2,
 		"dex": 0,
-		"con": -2,
+		"con": 0,
 		"int": -2,
 		"wis": 0,
-		"cha": 0
+		"cha": -2
 	},
 	{
 		"name": "Halfling",
